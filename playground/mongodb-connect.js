@@ -1,4 +1,9 @@
-const MongoClient = require('mongodb').MongoClient;
+//const MongoClient = require('mongodb').MongoClient;
+const { MongoClient , ObjectID } = require('mongodb');
+//ObjectID allows to create _id on the fly
+
+//let obj = new ObjectID();
+//console.log('obj', obj);
 
 MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db)=> {
 	if (err) {
@@ -19,6 +24,7 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db)=> {
 	});
 	*/
 
+	
 	db.collection('Users').insertOne({
 		name: 'Bob',
 		age: 23,
@@ -29,7 +35,11 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db)=> {
 		}
 
 		console.log( JSON.stringify(result.ops, undefined, 2) );
+		console.log(result.ops[0]._id.getTimestamp() ); //gets timestamp of object _id
 	});
 
 	db.close();
+	
+
+
 });
