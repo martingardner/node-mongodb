@@ -10,6 +10,10 @@
 		* list of cursor methods http://mongodb.github.io/node-mongodb-native/2.2/api/Cursor.html
 		* .toArray() converts the pointer (.find()) into an array for use.  
 
+#mongodb update
+* list of operators https://docs.mongodb.com/manual/reference/operator/update/
+* findOneAndUpdate({what to target, same as find}, operator of what to do )
+
 # todo app 
 * contains node-mongodb-native
 * using robo3T of Robomongo to visually be able to see the mongo db
