@@ -17,3 +17,6 @@
 # todo app 
 * contains node-mongodb-native
 * using robo3T of Robomongo to visually be able to see the mongo db
+* also using mongoosejs as an ORM for mongodb
+* playground folder is just using the native mongodb drivers
+* server folder is using mongoose
