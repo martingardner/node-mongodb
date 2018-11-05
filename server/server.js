@@ -1,81 +1,32 @@
-let mongoose = require('mongoose');
+let express = require('express');
+let bodyParser = require('body-parser');
 
-/*
-this is set, because by default mongoose doesn't know whether a Promise is from a third party 
-or from native javascript
-*/
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/TodoApp');
+let {mongoose} = require('./db/mongoose');
+let {Todo} = require('./models/todo');
+let {User} = require('./models/user');
 
-let Todo = mongoose.model('Todo', {
-	text : {
-		type: String,
-		required: true,
-		minlength: 1,
-		trim: true
-	},
-	completed : {
-		type: Boolean,
-		default: false
-	},
-	completedAt: {
-		type: Number,
-		default: null
-	}
-});
+const port = process.env.PORT || 3000; // setting this up for Heroku, 3000 if local, whatever port heroku gives if on their site
 
-let User = mongoose.model('User', {
-	email : {
-		type: String,
-		required: true,
-		trim: true,
-		minlength: 1
-	}
-});
+let app = express();
 
-/*
-let newTodo = new Todo({
-	text: 'Cook dinner'
-});
-*/
+app.use( bodyParser.json() );
 
-/*
-let newTodo2 = new Todo({
-	text: 'Med the dog',
-	completed: false,
-	completedAt: 08181288
-
-});
-*/
-
-
-let newUser = new User({
-	email : 'the@the.com'
-});
-/*
-newTodo
-	.save()
-	.then( (doc) => {
-		console.log(`Saved todo ${doc}`);
-	}, (e) => {
-		console.log(`Unable to save todo ${e}`)
+app.post('/todos', (req, res) => {
+	console.log(req.body);
+	let todo = new Todo({
+		text: req.body.text
 	});
-*/
 
-/*
-newTodo2
+	todo
 	.save()
-	.then( (doc) => {
-		console.log(`Saved todo ${doc}`);
+	.then( (doc)=> {
+		res.send(doc);
 	}, (e) => {
-		console.log(`Unable to save todo ${e}`)
+		//console.log(`there was an error with this post ${e}`)
+		res.status(400).send(e);
 	});
-*/
+});
 
-newUser
-	.save()
-	.then( (doc) => {
-		console.log(`saved user : ${JSON.stringify(doc, undefined, 2)}`)
-	}, (e) => {
-		console.log(`Unable to save user ${e}`);
-	});
+app.listen(port, () => {
+	console.log(`Started on port ${port}`);
+});
