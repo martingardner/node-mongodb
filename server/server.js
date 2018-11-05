@@ -18,14 +18,26 @@ app.post('/todos', (req, res) => {
 	});
 
 	todo
-	.save()
-	.then( (doc)=> {
-		res.send(doc);
-	}, (e) => {
-		//console.log(`there was an error with this post ${e}`)
-		res.status(400).send(e);
-	});
+		.save()
+		.then( (doc)=> {
+			res.send(doc);
+		}, (e) => {
+			res.status(400).send(e);
+		});
 });
+
+app.get('/todos', (req, res) => {
+	Todo
+		.find()
+		.then( (todos) => {
+			res.send({
+				todos : todos
+			});
+		}, (e) => {
+			res.status(400).send(e);
+		});
+});
+
 
 app.listen(port, () => {
 	console.log(`Started on port ${port}`);
