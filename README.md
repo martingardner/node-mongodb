@@ -21,3 +21,4 @@
 * playground folder is just using the native mongodb drivers
 * server folder is using mongoose
 * express and body-parser added in to take REST calls
+* mocha, expect, and supertest for testing added.
